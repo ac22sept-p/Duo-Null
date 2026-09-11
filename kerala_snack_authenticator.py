@@ -32,12 +32,12 @@ CERTIFIED_MALLU_SNACKS = [
 ]
 
 REJECTION_REASONS = [
-    "❌ Thatukada Council has rejected this item with immediate effect.",
-    "❌ No traces of Coconut Oil or Nendran Banana found. Blasphemy.",
-    "❌ This food cannot be dipped into a glass cup of hot chaya.",
-    "❌ Naattukaar are talking behind your back for eating this.",
+    "❌ Thatukada Council ee item eppozhe blacklist cheythu. Evidenu veruneda nee oke?",
+    "❌ Oru thulli Velichenna poyitu Nendran Banana skin polum illa... Enthu naattukkaarada ithu !!",
+    "❌ Bro, ee sadhanamokke aaranu choodu chaya-yil mukki thinnuka? Parayan polum kollilla!",.",
+    "❌ Kerala food aanu polum. Nee pottanano? Vayye mone?.",
     "❌ Ammavans at the junction are deeply disappointed in your lifestyle.",
-    "❌ Nee onum Orukaalathum Gunam pidikila",
+    "❌ Nee onnum orukaalathum gunam pidikilla mone... Thatukada Union 100% confirm cheythu",
     "❌ Chilara Kazhap onnum allale",
     "❌ Aare Ketikkaaana",
 ]
