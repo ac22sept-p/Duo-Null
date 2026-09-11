@@ -10,6 +10,8 @@ import customtkinter as ctk
 import random
 import threading
 import time
+import cv2
+from PIL import Image, ImageTk
 
 try:
     import winsound
@@ -38,8 +40,6 @@ REJECTION_REASONS = [
     "❌ Nee onum Orukaalathum Gunam pidikila",
     "❌ Chilara Kazhap onnum allale",
     "❌ Aare Ketikkaaana",
-    "❌ Ente Eeshoyee.",
-    "❌ "
 ]
 
 SCAN_STEPS = [
@@ -237,7 +237,7 @@ class ModernSnackApp(ctk.CTk):
         beep(900, 80)
         self.show_scanner()
 
-        # --- Screen 2: Scanning Progress (With Camera Integration) ---
+    # --- Screen 2: Scanning Progress (With Active Snack Profiling) ---
     def show_scanner(self):
         self.clear()
         self.is_scanning = True
@@ -255,8 +255,7 @@ class ModernSnackApp(ctk.CTk):
         )
         title.pack(pady=(15, 10))
 
-        # --- LIVE CAMERA FEED BOX ---
-        # This box displays the webcam feed if camera mode is on, or a cool matrix text box if typing mode is on.
+        # --- CAMERA FEED VIEWPORT ---
         self.cam_label = ctk.CTkLabel(
             container, 
             text="[ Initializing Thatukada Neural Scanner... ]" if not self.use_camera_mode else "[ Booting System Camera... ]", 
@@ -267,13 +266,8 @@ class ModernSnackApp(ctk.CTk):
         )
         self.cam_label.pack(pady=(0, 15))
 
-        # Import OpenCV and Pillow inside the function safely
-        import cv2
-        from PIL import Image, ImageTk
-
-        # Start hardware camera if camera mode is active
         if self.use_camera_mode:
-            self.cap = cv2.VideoCapture(0) # '0' selects your built-in webcam
+            self.cap = cv2.VideoCapture(0)
             self.update_camera_feed()
 
         # Modern CustomTkinter Progress Bar
@@ -307,16 +301,13 @@ class ModernSnackApp(ctk.CTk):
         self._run_scan(0)
 
     def update_camera_feed(self):
-        """Continuously pulls frames from the webcam and renders them in CustomTkinter."""
-        import cv2
-        from PIL import Image, ImageTk
-
+        """Continuously pulls live frames from the webcam."""
         if self.is_scanning and hasattr(self, 'cap') and self.cap and self.cap.isOpened():
             ret, frame = self.cap.read()
             if ret:
-                frame = cv2.flip(frame, 1) # Mirror effect
+                frame = cv2.flip(frame, 1)
                 frame = cv2.resize(frame, (360, 200))
-                self.latest_frame = frame.copy() # Store snapshot for final verdict screen
+                self.latest_frame = frame.copy()
                 
                 cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 img = Image.fromarray(cv2image)
@@ -333,9 +324,12 @@ class ModernSnackApp(ctk.CTk):
         total_steps = len(steps)
 
         if idx < total_steps:
-            self.step_label.configure(text=f"⟳  {steps[idx]}")
+            if self.use_camera_mode and idx == 3:
+                self.step_label.configure(text="⚠️ Scanning item texture... Is that a human face?!")
+            else:
+                self.step_label.configure(text=f"⟳  {steps[idx]}")
+                
             beep(480 + idx * 50, 45)
-
             target_val = (idx + 1) / total_steps
             current_val = idx / total_steps
 
@@ -353,30 +347,58 @@ class ModernSnackApp(ctk.CTk):
             self.progress_bar.set(1.0)
             self.pct_label.configure(text="100%")
             
-            # Shut down camera stream right before changing windows
             self.is_scanning = False
             if hasattr(self, 'cap') and self.cap and self.cap.isOpened():
                 self.cap.release()
                 
             self.after(300, self.show_verdict)
 
-    # --- Screen 3: The Verdict (Modified for Camera + Text) ---
+
+    # --- Screen 3: The Verdict (With Color Validation) ---
     def show_verdict(self):
         self.clear()
+        import cv2
+        from PIL import Image, ImageTk
 
         container = ctk.CTkFrame(self, corner_radius=15, fg_color="#182219")
         container.pack(fill="both", expand=True, padx=25, pady=25)
 
-        # Determine if the item is certified Malayali food
+        is_mallu = False
+        display_name = ""
+
         if self.use_camera_mode:
-            # If they used the camera, give them a funny, random 35% chance to pass or fail based on "visual scans"!
-            is_mallu = random.random() < 0.35
-            display_name = "Object held in Camera"
+            display_name = "Camera Capture"
+            if self.latest_frame is not None:
+                try:
+                    # --- SAFE COLOR ANALYSIS ROUTINE ---
+                    hsv = cv2.cvtColor(self.latest_frame, cv2.COLOR_BGR2HSV)
+                    
+                    # Broad spectrum representing golden/brown fried snack skin variations
+                    lower_gold = (10, 40, 40)
+                    upper_gold = (28, 255, 255)
+                    
+                    mask = cv2.inRange(hsv, lower_gold, upper_gold)
+                    gold_pixel_count = cv2.countNonZero(mask)
+                    total_pixels = 360 * 200
+                    gold_ratio = gold_pixel_count / total_pixels
+                    
+                    # If enough golden/brown color is seen, consider it a snack!
+                    if gold_ratio > 0.08:
+                        is_mallu = random.random() < 0.50
+                    else:
+                        is_mallu = False
+                            
+                except Exception as e:
+                    # Failsafe default so it NEVER goes blank or crashes
+                    is_mallu = random.random() < 0.35
+            else:
+                is_mallu = False
         else:
             n = self.snack_name.lower().strip()
             is_mallu = any(snack in n for snack in CERTIFIED_MALLU_SNACKS)
             display_name = self.snack_name.title()
 
+        # --- SCENARIO EVALUATIONS ---
         if is_mallu:
             beep(800, 100)
             self.after(120, lambda: beep(1200, 150))
@@ -384,11 +406,8 @@ class ModernSnackApp(ctk.CTk):
             badge_color = "#00e676"
             sub_text = "APPROVED BY KERALA STATE CHAYA SAMITHI ☕"
             sub_color = "#ffb300"
-            desc = (
-                f"'{display_name}' has passed all strict Nendran Banana and "
-                "Velichenna standards. Please consume immediately alongside one glass of boiling hot tea."
-            )
-            advice = "Recommendation: Dip it into the tea before every bite."
+            desc = f"'{display_name}' has passed all strict Nendran Banana and Velichenna texture benchmarks. Consume alongside a boiling hot tea."
+            advice = "Recommendation: Dip it into the tea before every single bite."
         else:
             beep(250, 250)
             self.after(280, lambda: beep(200, 300))
@@ -396,73 +415,43 @@ class ModernSnackApp(ctk.CTk):
             badge_color = "#ff3d00"
             sub_text = random.choice(REJECTION_REASONS)
             sub_color = "#ff5252"
-            desc = (
-                f"The AI scanning array determined '{display_name}' is an alien imposter. No authentic tea shop "
-                "between Kasaragod and Thiruvananthapuram will allow this inside their glass showcase."
-            )
+            desc = f"The scanning array determined '{display_name}' is an imposter or non-snack item. No authentic local tea shop will allow this inside their glass showcase cabinet."
             advice = "Recommendation: Throw this away and buy two Parippuvadas immediately."
 
-        # --- CAMERA EVIDENCE SNAPSHOT GRID ---
-        # If camera mode captured an image, show it here!
+        # --- CAMERA EVIDENCE SNAPSHOT RENDER ---
         if self.use_camera_mode and self.latest_frame is not None:
-            import cv2
-            from PIL import Image, ImageTk
+            try:
+                border_color = (118, 230, 0) if is_mallu else (0, 61, 255)
+                snapshot = cv2.copyMakeBorder(self.latest_frame, 6, 6, 6, 6, cv2.BORDER_CONSTANT, value=border_color)
+                snapshot = cv2.resize(snapshot, (240, 130))
+                
+                rgb_snap = cv2.cvtColor(snapshot, cv2.COLOR_BGR2RGB)
+                img = Image.fromarray(rgb_snap)
+                imgtk = ImageTk.PhotoImage(image=img)
+                
+                lbl_photo = ctk.CTkLabel(container, text="", image=imgtk, corner_radius=8)
+                lbl_photo.imgtk = imgtk
+                lbl_photo.pack(pady=(15, 0))
+            except:
+                pass 
 
-            # Draw a funny glowing colored frame border around your face/snack snapshot
-            border_color = (118, 230, 0) if is_mallu else (0, 61, 255) # BGR codes
-            snapshot = cv2.copyMakeBorder(self.latest_frame, 6, 6, 6, 6, cv2.BORDER_CONSTANT, value=border_color)
-            snapshot = cv2.resize(snapshot, (240, 130))
-            
-            rgb_snap = cv2.cvtColor(snapshot, cv2.COLOR_BGR2RGB)
-            img = Image.fromarray(rgb_snap)
-            imgtk = ImageTk.PhotoImage(image=img)
-            
-            lbl_photo = ctk.CTkLabel(container, text="", image=imgtk, corner_radius=8)
-            lbl_photo.imgtk = imgtk
-            lbl_photo.pack(pady=(15, 0))
-
-        # Verdict Header
-        header = ctk.CTkLabel(
-            container, 
-            text=badge_text, 
-            font=ctk.CTkFont(size=16, weight="bold"),
-            text_color=badge_color
-        )
+        # Output Layout Labels
+        header = ctk.CTkLabel(container, text=badge_text, font=ctk.CTkFont(size=16, weight="bold"), text_color=badge_color)
         header.pack(pady=(15, 4))
 
-        sub_lbl = ctk.CTkLabel(
-            container, 
-            text=sub_text, 
-            font=ctk.CTkFont(size=12, weight="bold"),
-            text_color=sub_color,
-            wraplength=500
-        )
+        sub_lbl = ctk.CTkLabel(container, text=sub_text, font=ctk.CTkFont(size=12, weight="bold"), text_color=sub_color, wraplength=500)
         sub_lbl.pack(pady=(0, 12))
 
-        # Card with detailed verdict
         card = ctk.CTkFrame(container, fg_color="#0f1710", corner_radius=12)
         card.pack(fill="x", padx=40, pady=(0, 15))
 
-        desc_lbl = ctk.CTkLabel(
-            card, 
-            text=desc, 
-            font=ctk.CTkFont(size=12),
-            text_color="#ffffff",
-            wraplength=440,
-            justify="center"
-        )
+        desc_lbl = ctk.CTkLabel(card, text=desc, font=ctk.CTkFont(size=12), text_color="#ffffff", wraplength=440, justify="center")
         desc_lbl.pack(padx=20, pady=(12, 8))
 
-        adv_lbl = ctk.CTkLabel(
-            card, 
-            text=advice, 
-            font=ctk.CTkFont(family="Courier", size=11, weight="bold"),
-            text_color="#ffb300" if is_mallu else "#8ea893",
-            wraplength=440
-        )
+        adv_lbl = ctk.CTkLabel(card, text=advice, font=ctk.CTkFont(family="Courier", size=11, weight="bold"), text_color="#ffb300" if is_mallu else "#8ea893", wraplength=440)
         adv_lbl.pack(padx=20, pady=(0, 12))
 
-        # Bottom Buttons
+        # Bottom control buttons
         btn_box = ctk.CTkFrame(container, fg_color="transparent")
         btn_box.pack(pady=5)
 
