@@ -39,7 +39,7 @@ REJECTION_REASONS = [
     "❌ Ammavans at the junction are deeply disappointed in your lifestyle.",
     "❌ Nee onnum orukaalathum gunam pidikilla mone... Thatukada Union 100% confirm cheythu",
     "❌ Chilara Kazhap onnum allale",
-    "❌ Aare Ketikkaaana",
+    "❌ ennalum nee, poothu pole valarnittum....ippolum....",
 ]
 
 SCAN_STEPS = [
