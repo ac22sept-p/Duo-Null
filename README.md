@@ -2,7 +2,7 @@
 
 
 
-# [Project Name] 🎯
+# Kerala Snack Authenticator 🎯
 
 
 ## Basic Details
@@ -44,7 +44,7 @@ For Hardware:
 ### Implementation
 For Software:
 # Installation
-[commands]
+
 
 # Run
 [commands]
