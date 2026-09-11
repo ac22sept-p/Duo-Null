@@ -6,16 +6,15 @@
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: Duo Null
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Abhishek C - Sahrdaya Collage of Engineering and Technology
+- Member 2: E A Abhijith - Sahrdaya Collage of Engineering and Technology
 
 ### Project Description
-[2-3 lines about what your project does]
+God’s Own Country deserves something much more biased. The Kerala Snack Authenticator™ scans your food to ensure it meets strict 4:00 PM tea-time standards—though it is so delightfully useless that it will happily scan your face and classify you as a Western imperialist burger." 😂🍌☕
 
 ### The Problem (that doesn't exist)
 [What ridiculous problem are you solving?]
@@ -26,10 +25,16 @@
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- Languages used : Python
+- Frameworks used : CustomTkinter
+- Libraries used :opencv-python (cv2) — Handles the live system camera feed.
+  Pillow (PIL) — Converts camera frames into images inside the app interface.
+  random & time — Manages the chaotic snack rejection logic and progress bars.
+  threading & winsound — Plays the retro arcade arcade-like beep sound alerts without freezing the app window.
+- Tools used : VS Code / IDLE (For writing and testing the Python script)
+  pip (For package management and installing modules)
+  Windows Terminal (For running the app code stack)
+  Google Gemini (AI assistant used for code debugging and logic optimization)  
 
 For Hardware:
 - [List main components]
@@ -89,9 +94,8 @@ For Hardware:
 [Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- Abhishek C: Created the base model.
+- [Name 2]: Updated the base model to the final output.
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
