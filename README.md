@@ -43,11 +43,11 @@ For Hardware:
 
 ### Implementation
 For Software:
-# Installation
+# Installation : pip install customtkinter opencv-python pillow
 
 
 # Run
-[commands]
+python 
 
 ### Project Documentation
 For Software:
