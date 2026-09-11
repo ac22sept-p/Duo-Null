@@ -14,10 +14,10 @@
 God’s Own Country deserves something much more biased. The Kerala Snack Authenticator™ scans your food to ensure it meets strict 4:00 PM tea-time standards—though it is so delightfully useless that it will happily scan your face and classify you as a Western imperialist burger." 😂🍌☕
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+people eating mallu snacks
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+uses user input as text/ webcam to inspect food and roast your choices
 
 ## Technical Details
 ### Technologies/Components Used
@@ -49,12 +49,12 @@ python kerala_snack_authenticator.py
 ### Project Documentation
 For Software:
 
-# Screenshots (Add at least 3)
+# Screenshots:
 <img width="802" height="788" alt="Screenshot 2026-09-12 034957" src="https://github.com/user-attachments/assets/22979d3a-01d1-48a6-8385-64a2804f3c7d" />
-*Add caption explaining what this shows*
+The main home screen where the user selects their snack verification method
 
 <img width="802" height="788" alt="Screenshot 2026-09-12 035030" src="https://github.com/user-attachments/assets/3f8d1011-6620-416b-8209-23a22f8267d5" />
-*Add caption explaining what this shows*
+
 
 <img width="802" height="788" alt="Screenshot 2026-09-12 035030" src="https://github.com/user-attachments/assets/d8f6beff-e07d-4022-b643-2b6c2044f2c2" />
 *Add caption explaining what this shows*
