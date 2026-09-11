@@ -53,13 +53,19 @@ python kerala_snack_authenticator.py
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
+<img width="802" height="788" alt="Screenshot 2026-09-12 034957" src="https://github.com/user-attachments/assets/22979d3a-01d1-48a6-8385-64a2804f3c7d" />
 *Add caption explaining what this shows*
 
-![Screenshot2](Add screenshot 2 here with proper name)
+<img width="802" height="788" alt="Screenshot 2026-09-12 035030" src="https://github.com/user-attachments/assets/3f8d1011-6620-416b-8209-23a22f8267d5" />
 *Add caption explaining what this shows*
 
-![Screenshot3](Add screenshot 3 here with proper name)
+<img width="802" height="788" alt="Screenshot 2026-09-12 035030" src="https://github.com/user-attachments/assets/d8f6beff-e07d-4022-b643-2b6c2044f2c2" />
+*Add caption explaining what this shows*
+
+<img width="802" height="788" alt="Screenshot 2026-09-12 035316" src="https://github.com/user-attachments/assets/28c82cf2-be5a-4af3-b7cb-4aeb966770a1" />
+*Add caption explaining what this shows*
+
+
 *Add caption explaining what this shows*
 
 # Diagrams
