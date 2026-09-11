@@ -47,7 +47,7 @@ For Software:
 
 
 # Run
-python 
+python kerala_snack_authenticator.py
 
 ### Project Documentation
 For Software:
