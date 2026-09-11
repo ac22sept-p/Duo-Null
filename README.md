@@ -95,7 +95,7 @@ For Hardware:
 
 ## Team Contributions
 - Abhishek C: Created the base model.
-- [Name 2]: Updated the base model to the final output.
+- E A Abhijith : Updated the base model to the final output.
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
