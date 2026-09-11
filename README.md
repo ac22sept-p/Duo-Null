@@ -65,7 +65,7 @@ For Software:
 <img width="802" height="788" alt="Screenshot 2026-09-12 035316" src="https://github.com/user-attachments/assets/28c82cf2-be5a-4af3-b7cb-4aeb966770a1" />
 *Add caption explaining what this shows*
 
-
+<img width="1284" height="1260" alt="Screenshot 2026-09-12 035309" src="https://github.com/user-attachments/assets/a9dd9406-d180-49d5-90cd-4e8be2675acb" />
 *Add caption explaining what this shows*
 
 # Diagrams
