@@ -38,6 +38,8 @@ REJECTION_REASONS = [
     "❌ Nee onum Orukaalathum Gunam pidikila",
     "❌ Chilara Kazhap onnum allale",
     "❌ Aare Ketikkaaana",
+    "❌ Ente Eeshoyee.",
+    "❌ "
 ]
 
 SCAN_STEPS = [
